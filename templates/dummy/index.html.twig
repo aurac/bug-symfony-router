@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DummyController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Bug happens when a route parameter is named "$path" and there is a "/" at the end of the url </h1>
+
+    <h2>With a parameter named "$path"</h2>
+
+    Working without a "/" at the end of the url :
+    <ul>
+        {% for dummy in dummies %}
+            <li><a href="{{ path('app_path', {'slug': dummy.slug}) }}">{{ absolute_url(path('app_path', {'slug': dummy.slug})) }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <span style="color: red">Bugging with a "/" at the end of the url :</span>
+    <ul>
+        {% for dummy in dummies %}
+            <li><a href="{{ path('app_path', {'slug': dummy.slug}) }}/">{{ absolute_url(path('app_path', {'slug': dummy.slug})) }}/</a></li>
+        {% endfor %}
+    </ul>
+
+    <h2>With a parameter that is not named "$path"</h2>
+
+    Working without a "/" at the end of the url :
+    <ul>
+        {% for dummy in dummies %}
+            <li><a href="{{ path('app_not_path', {'slug': dummy.slug}) }}">{{ absolute_url(path('app_not_path', {'slug': dummy.slug})) }}</a></li>
+        {% endfor %}
+    </ul>
+
+    Working with a "/" at the end of the url :
+    <ul>
+        {% for dummy in dummies %}
+            <li><a href="{{ path('app_not_path', {'slug': dummy.slug}) }}/">{{ absolute_url(path('app_not_path', {'slug': dummy.slug})) }}/</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
